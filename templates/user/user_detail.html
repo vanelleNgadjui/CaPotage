@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User: {{ object.username }} {% endblock %}
+
+{% block content %}
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="title">
+        <h1>Salut {{ object.username }},</h1>
+        <h2>Vous êtes {{ object.role }} sur cette plateforme</h2>
+        <p>Ici vous pouvez avoir le contrôle sur votre compte.</p>
+      </div>
+    </div>
+  </div>
+
+  {% if object == request.user %}
+
+  <div class="all-actions">
+    <div class="manager">
+      <h3>Actions sur la plateforme</h3>
+      <div class="action-manager">
+
+
+        <div class="card">
+          <p>Acceder a toutes vos demandes</p>
+          <a class="btn btn-primary" href="{% url 'ventes:mes_demandes' %}" role="button">Mes demandes</a>
+        </div>
+
+        {% if object.role == 'VENDEUR' or object.role == 'ACHETEUR_VENDEUR' %}
+        <div class="card">
+          <p>Deposer une vente sur la plateforme</p>
+          <a class="btn btn-primary" href="{% url 'ventes:create' %}" role="button">Create Sale</a>
+        </div>
+        {% endif %}
+        {% if object.ventes.all %}
+        <div class="card">
+          <p>Voir toutes mes ventes</p>
+          <a class="btn btn-primary" href="{% url 'ventes:list' %}" role="button">Voir mes ventes</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    <div class="user">
+
+      <h3>Actions sur mon compte</h3>
+      <div class="action-user">
+        <div class="card">
+          <p>Modifier mes informations personnelles</p>
+          <a class="btn btn-primary" href="{% url 'users:update' %}" role="button">Mes infos</a>
+        </div>
+
+        <div class="card">
+          <p>Modifier ou ajouter un email</p>
+          <a class="btn btn-primary" href="{% url 'account_email' %}" role="button">E-Mail</a>
+        </div>
+        <div class="card">
+          <p>Changer de rôle sur la plateforme</p>
+          <a class="btn btn-primary" href="{% url 'users:change_role' %}" role="button">Changer de role</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <!-- Action buttons -->
+
+</div>
+{% endblock content %}

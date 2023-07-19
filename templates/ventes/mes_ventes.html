@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mes ventes{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Mes ventes</h2>
+
+    {% if ventes %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Tarif</th>
+                <th>Période</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vente in ventes %}
+            <tr>
+                <td>{{ vente.produit }}</td>
+                <td>{{ vente.tarif }}</td>
+                <td>{{ vente.periode }}</td>
+                <td>
+                    <a class="btn btn-secondary" href="{% url 'ventes:vente_detail' vente.id %}" role="button">View</a>
+                    <a class="btn btn-primary" href="{% url 'ventes:update' vente.id %}" role="button">Edit</a>
+                    <a class="btn btn-danger" href="{% url 'ventes:delete' vente.id %}" role="button">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No sales available.</p>
+    {% endif %}
+</div>
+{% endblock content %}

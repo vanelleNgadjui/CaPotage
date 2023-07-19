@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Mes Demandes{% endblock %}
+
+{% block content %}
+<h1>Mes Demandes</h1>
+
+{% if user.is_authenticated %}
+{% with "ACHETEUR" as role_acheteur %}
+{% with "VENDEUR" as role_vendeur %}
+{% with "ACHETEUR_VENDEUR" as role_acheteur_vendeur %}
+
+<table class="table">
+  <thead>
+    <tr>
+      {% if user.role == role_vendeur or user.role == role_acheteur_vendeur %}
+      <th>Acheteur</th>
+      {% endif %}
+      <th>Vente</th>
+      {% if user.role == role_acheteur or user.role == role_acheteur_vendeur %}
+      <th>Vendeur</th>
+      {% endif %}
+      <th>Message</th>
+      <th>Date de demande</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for demande in demandes %}
+    <tr>
+      {% if user.role == role_vendeur or user.role == role_acheteur_vendeur %}
+      <td>{{ demande.acheteur.username }}</td>
+      {% endif %}
+      <td>{{ demande.vente.produit }}</td>
+      {% if user.role == role_acheteur or user.role == role_acheteur_vendeur %}
+      <td>{{ demande.vente.vendeur }}</td>
+      {% endif %}
+      <td>{{ demande.message }}</td>
+      <td>{{ demande.date_demande }}</td>
+      <td>
+        {% if user.role == role_acheteur or user.role == role_acheteur_vendeur %}
+        {% if demande.traitee %}
+        {% if demande.acceptee %}
+        Acceptée
+        {% else %}
+        Refusée
+        {% endif %}
+        {% else %}
+        Non traitée
+        {% endif %}
+        {% endif %}
+
+        {% if user.role == role_vendeur or user.role == role_acheteur_vendeur %}
+  {% if demande.traitee %}
+    {% if demande.acceptee %}
+      <p>Vous avez accepté cette demande.</p>
+    {% else %}
+      <p>Vous avez refusé cette demande.</p>
+    {% endif %}
+  {% else %}
+    <form method="post" action="{% url 'ventes:traiter_demande' demande_id=demande.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="accepter">
+      <button class="btn btn-success" type="submit">Accepter</button>
+    </form>
+
+    <form method="post" action="{% url 'ventes:traiter_demande' demande_id=demande.id %}">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="refuser">
+      <button class="btn btn-danger" type="submit">Refuser</button>
+    </form>
+  {% endif %}
+{% endif %}
+
+
+
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endwith %}
+{% endwith %}
+{% endwith %}
+{% endif %}
+{% endblock %}

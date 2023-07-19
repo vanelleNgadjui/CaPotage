@@ -1,0 +1,525 @@
+{% load static i18n %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>{% block title %}Ça potage{% endblock title %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <![endif]-->
+
+
+  <!-- 
+    - favicon
+  -->
+  <!-- <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml"> -->
+  <link rel="icon" href="{% static 'images/favicons/favicon.ico' %}">
+
+  {% block css %}
+  <!-- Latest compiled and minified Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <!-- Your stuff: Third-party CSS libraries go here -->
+  <!-- This file stores project-specific CSS -->
+
+  <link href="{% static 'css/project.css' %}" rel="stylesheet">
+  <!-- 
+    - custom css link
+  -->
+  <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}"> -->
+
+  {% endblock %}
+
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- 
+    - preload images
+  -->
+  <link rel="preload" as="image" href="{% static 'images/logo.png' %}">
+  <link rel="preload" as="image" href="{% static 'images/hero-banner-1.jpg' %}">
+  <link rel="preload" as="image" href="{% static 'images/hero-banner-2.jpg' %}">
+  <link rel="preload" as="image" href="{% static 'images/hero-banner-3.jpg' %}">
+
+
+</head>
+
+<body id="top">
+
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header">
+
+    <div class="alert">
+      <div class="container">
+        <p class="alert-text">Livraison gratuite sur toutes les commandes en France de 50€ et plus</p>
+      </div>
+    </div>
+
+    <div class="header-top" data-header>
+      <div class="container">
+
+        <button class="nav-open-btn" aria-label="open menu" data-nav-toggler>
+          <span class="line line-1"></span>
+          <span class="line line-2"></span>
+          <span class="line line-3"></span>
+        </button>
+
+        <div class="input-wrapper">
+          <form action="{% url 'ventes:list' %}" method="GET">
+            <input type="search" name="search_query" placeholder="rechercher un produit" class="search-field">
+
+            <button type="submit" class="search-submit" aria-label="search">
+              <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+            </button>
+          </form>
+        </div>
+
+
+        <a href="#" class="logo">
+          <img src="{% static 'images/logo.png' %}" width="179" height="26" alt="Ca Potage">
+        </a>
+
+        <div class="header-actions">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "Mon profil" %}</a>
+          </li>
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'chats:rooms' %}">{% trans "Chats" %}</a>
+          </li>
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+          </li>
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
+          </li>
+          {% endif %}
+          <!-- <button class="header-action-btn" aria-label="user">
+            <ion-icon name="person-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+          </button>
+
+          <button class="header-action-btn" aria-label="favourite item">
+            <ion-icon name="star-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button>
+
+          <button class="header-action-btn" aria-label="cart item">
+            <data class="btn-text" value="0">$0.00</data>
+
+            <ion-icon name="bag-handle-outline" aria-hidden="true" aria-hidden="true"></ion-icon>
+
+            <span class="btn-badge">0</span>
+          </button> -->
+
+        </div>
+
+        <nav class="navbar">
+          <ul class="navbar-list">
+
+            <li>
+              <a href="{% url 'home' %}#home" class="navbar-link" data-nav-link>Home</a>
+            </li>
+
+            <li>
+              <a href="{% url 'home' %}#categorie" class="navbar-link" data-nav-link>Categories</a>
+            </li>
+
+            <li>
+              <a href="{% url 'ventes:list' %}" class="navbar-link" data-nav-link>Shop</a>
+            </li>
+
+            <li>
+              <a href="{% url 'home' %}#about" class="navbar-link" data-nav-link>About</a>
+            </li>
+
+            <li>
+              <a href="{% url 'home' %}#blog" class="navbar-link" data-nav-link>Blog</a>
+            </li>
+
+
+            {% if request.user.is_authenticated %}
+            {% if request.user.role == 'VENDEUR' or request.user.role == 'ACHETEUR_VENDEUR' %}
+            <button class="vente">
+              {# URL provided by django-allauth/account/urls.py #}
+              <a id="sign-up-link" class="nav-link" href="{% url 'ventes:create' %}">{% trans "Deposer une vente" %}</a>
+            </button>
+            {% endif %}
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+  </header>
+
+
+
+
+
+  <!-- 
+    - #MOBILE NAVBAR
+  -->
+
+  <div class="sidebar">
+    <div class="mobile-navbar" data-navbar>
+
+      <div class="wrapper">
+        <a href="#" class="logo">
+          <img src="{% static 'images/logo.png' %}" width="179" height="26" alt="Ca Potage">
+        </a>
+
+        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
+          <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+
+      <ul class="navbar-list">
+
+        <li>
+          <a href="{% url 'home' %}#home" class="navbar-link" data-nav-link>Home</a>
+        </li>
+
+        <li>
+          <a href="{% url 'home' %}#categorie" class="navbar-link" data-nav-link>Categories</a>
+        </li>
+
+        <li>
+          <a href="{% url 'ventes:list' %}" class="navbar-link" data-nav-link>Shop</a>
+        </li>
+
+        <li>
+          <a href="{% url 'home' %}#about" class="navbar-link" data-nav-link>About</a>
+        </li>
+
+        <li>
+          <a href="{% url 'home' %}#blog" class="navbar-link" data-nav-link>Blog</a>
+        </li>
+        {% if request.user.is_authenticated %}
+        {% if request.user.role == 'VENDEUR' or request.user.role == 'ACHETEUR_VENDEUR' %}
+            <button class="vente">
+              {# URL provided by django-allauth/account/urls.py #}
+              <a id="sign-up-link" class="nav-link" href="{% url 'ventes:create' %}">{% trans "Deposer une vente" %}</a>
+            </button>
+            {% endif %}
+        <li >
+          {# URL provided by django-allauth/account/urls.py #}
+          <a class="navbar-link" href="{% url 'users:detail' request.user.username  %}">{% trans "Mon profil" %}</a>
+        </li>
+        <li >
+          {# URL provided by django-allauth/account/urls.py #}
+          <a class="navbar-link" href="{% url 'chats:rooms' %}">{% trans "Chats" %}</a>
+        </li>
+        <li >
+          {# URL provided by django-allauth/account/urls.py #}
+          <a class="navbar-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+        </li>
+        {% else %}
+        <li >
+          {# URL provided by django-allauth/account/urls.py #}
+          <a id="sign-up-link" class="navbar-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+        </li>
+        <li>
+          {# URL provided by django-allauth/account/urls.py #}
+          <a id="log-in-link" class="navbar-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
+        </li>
+        {% endif %}
+      </ul>
+
+    </div>
+
+    <div class="overlay" data-nav-toggler data-overlay></div>
+  </div>
+
+
+  <!-- <div class="mb-1">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+        data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'home' %}">Ça potage</a>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'about' %}">About</a>
+          </li>
+          {% if request.user.is_authenticated %}
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'ventes:list' %}">{% trans "Ventes" %}</a>
+          </li>
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "Mon profil" %}</a>
+          </li>
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+          </li>
+          <li class="nav-item">
+            {# URL provided by django-allauth/account/urls.py #}
+            <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+  </div> -->
+
+  <div class="container">
+
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">{{ message }}<button type="button"
+        class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>
+    {% endfor %}
+    {% endif %}
+
+    {% block content %}
+    {% endblock content %}
+
+  </div> <!-- /container -->
+
+  {% block modal %}{% endblock modal %}
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer" data-section>
+    <div class="container">
+
+      <div class="footer-top">
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Ça potage</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text">
+              Trouvez une boutique près de <a href="#" class="link">chez vous</a>.
+            </p>
+          </li>
+
+          <li>
+            <p class="footer-list-text bold">+33 00 30 00 06</p>
+          </li>
+
+          <li>
+            <p class="footer-list-text">capotage@gmail.com</p>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Liens utiles</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Nouveaux Produits</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Best Sellers</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Les plus recherchés</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Promos</a>
+          </li>
+
+        </ul>
+
+        <ul class="footer-list">
+
+          <li>
+            <p class="footer-list-title">Infomations</p>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Politique de retours</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Nous contacter</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Livraison FAQ</a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Termes & Conditions </a>
+          </li>
+
+          <li>
+            <a href="#" class="footer-link">Politique De Confidentialité</a>
+          </li>
+
+        </ul>
+
+        <div class="footer-list">
+
+          <p class="newsletter-title">Newsletter</p>
+
+          <p class="newsletter-text">
+            Entrez votre e-mail ci-dessous pour être le premier informé de toutes nos actualités. 
+            "C’est meilleur quand ça vient d’ici."
+          </p>
+
+          <form action="" class="newsletter-form">
+            <input type="email" name="email_address" placeholder="Entrez votre adresse email" required
+              class="email-field">
+
+            <button type="submit" class="btn btn-primary">S'abonner</button>
+          </form>
+
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+
+        <div class="wrapper">
+          <p class="copyright">
+            &copy; 2023  Vanelle Ngadjui
+          </p>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-instagram"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-youtube"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+
+        <a href="#" class="logo">
+          <img src="{% static 'images/logo.png' %}" width="179" height="26" loading="lazy" alt="Ca Potage">
+        </a>
+
+        <img src="{% static 'images/pay.png' %}" width="313" height="28" alt="available all payment method"
+          class="w-100">
+
+      </div>
+
+    </div>
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #BACK TO TOP
+  -->
+
+  <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+    <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+  </a>
+
+
+
+
+  {% block javascript %}
+  <!-- 
+    - custom js link
+  -->
+  <script src="{% static 'js/script.js' %}" defer></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+  <!-- Le javascript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+
+  <!-- Bootstrap JS and its dependencies-->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <!-- Your stuff: Third-party javascript libraries go here -->
+
+
+  <!-- place project specific Javascript in this file -->
+  <script src="{% static 'js/project.js' %}"></script>
+  {% endblock javascript %}
+
+</body>
+
+</html>

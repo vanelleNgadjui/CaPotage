@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Créer une Vente{% endblock %}
+
+{% block content %}
+
+<div class="title">
+  <h1>Création de vente</h1>
+  <p>Ici vous pouvez deposer toutes les informations pour enregistrer votre vente sur la plateforme.</p>
+</div>
+
+<div class="col-md-6 offset-md-3">
+  <form method="post" enctype="multipart/form-data" class="login">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button class="btn btn-primary" type="submit">Créer</button>
+  </form>
+</div>
+{% endblock %}

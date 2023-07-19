@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Changer de rôle{% endblock %}
+
+{% block content %}
+  <div class="title">
+    <h1>Changer de rôle</h1>
+    <p>Ici vous pouvez changer votre rôle sur la plateforme.</p>
+    <p>Si vous avez le rôle d'acheteur, vous pouvez devenir venndeur ou acheteur_vendeur</p>
+    <p>Si vous avez le rôle de vendeur, vous pouvez devenir acheteur_vendeur</p>
+    <p>Et vous {{ user.username }}, vous êtes {{ user.role }} !</p>
+  </div>
+  
+  <div class="col-md-6 offset-md-3">
+  <form method="post" enctype="multipart/form-data" class="login role">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button class="btn btn-primary" type="submit">Changer de rôle</button>
+  </form>
+  </div>
+{% endblock %}

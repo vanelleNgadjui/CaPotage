@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Liste des Ventes{% endblock %}
+
+{% block content %}
+      <!-- 
+        - #SHOP
+      -->
+
+<section class="section shop" id="shop" aria-label="shop" data-section>
+  <div class="container">
+
+    <div class="title-wrapper">
+      <h2 class="h2 section-title">Toutes les ventes</h2>
+    </div>
+
+    <ul class="has-scrollbar">
+      {% for vente in ventes %}
+      <li class="scrollbar-item">
+        <div class="shop-card">
+          <div>
+
+            <h3>
+              <a href="{% url 'ventes:vente_detail' vente.id %}" class="card-title"> Vendeur: {{ vente.vendeur.username }}</a>
+            </h3>
+            <p>Periode de vente: </p>
+            <p>{{ vente.date_debut }} - {{ vente.date_fin }}</p>
+          </div>
+
+          <div class="card-banner img-holder" >
+            <!-- style="--width: 540; --height: 720;" -->
+            <img src="{{ vente.photos.url }}" loading="lazy" alt="{{ vente.produit }}"
+              class="img-cover">
+              <!-- width="540" height="720"  -->
+
+            <span class="badge" aria-label="20% off">-20%</span>
+
+            <div class="card-actions">
+
+              <button class="action-btn" aria-label="add to cart">
+                <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
+              </button>
+
+              <button class="action-btn" aria-label="add to whishlist">
+                <ion-icon name="star-outline" aria-hidden="true"></ion-icon>
+              </button>
+
+              <button class="action-btn" aria-label="compare">
+                <ion-icon name="repeat-outline" aria-hidden="true"></ion-icon>
+              </button>
+
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="price">
+              <del class="del">{{ vente.tarif|floatformat:2|add:"-10" }}€</del>
+              <span class="span">{{vente.tarif }}€</span>
+            </div>
+
+            <h3>
+              <a href="{% url 'ventes:vente_detail' vente.id %}" class="card-title">{{ vente.produit }}</a>
+            </h3>
+
+            <div class="card-rating">
+
+              <div class="rating-wrapper" aria-label="5 start rating">
+                <ion-icon name="star" aria-hidden="true"></ion-icon>
+                <ion-icon name="star" aria-hidden="true"></ion-icon>
+                <ion-icon name="star" aria-hidden="true"></ion-icon>
+                <ion-icon name="star" aria-hidden="true"></ion-icon>
+                <ion-icon name="star" aria-hidden="true"></ion-icon>
+              </div>
+
+              <p class="rating-text">5170 reviews</p>
+
+            </div>
+            <div class="mb-6">
+              {% if vente.vendeur == request.user %}
+            <a class="btn btn-primary" href="{% url 'ventes:vente_update' vente.id %}" role="button">Modifier</a>
+            <a class="btn btn-danger" href="{% url 'ventes:vente_delete' vente.id %}" role="button">Supprimer</a>
+            {% endif %}
+            <a class="btn btn-secondary" href="{% url 'ventes:vente_detail' vente.id %}" role="button">Voir</a>
+            {% if user.is_authenticated and user.role == "ACHETEUR" %}
+            <a href="{% url 'ventes:demande_achat' vente_id=vente.id %}" class="btn btn-primary">Envoyer une demande
+              d'achat</a>
+            {% endif %}
+            </div>
+            
+
+          </div>
+
+        </div>
+      </li>
+      {% endfor %}
+
+    </ul>
+
+  </div>
+</section>
+
+{% endblock %}

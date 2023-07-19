@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Traitement de la Demande d'Achat{% endblock %}
+
+{% block content %}
+  <h1>Traitement de la Demande d'Achat</h1>
+
+  <h2>{{ demande.vente.produit }}</h2>
+  <p>Acheteur : {{ demande.acheteur.username }}</p>
+  <p>Message : {{ demande.message }}</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="accepter">
+    <button class="btn btn-success" type="submit">Accepter</button>
+  </form>
+
+  <form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="refuser">
+    <button class="btn btn-danger" type="submit">Refuser</button>
+  </form>
+{% endblock %}
