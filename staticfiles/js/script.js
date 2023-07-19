@@ -95,3 +95,33 @@ const scrollReveal = function () {
 scrollReveal();
 
 addEventOnElem(window, "scroll", scrollReveal);
+
+
+
+// details page
+function img(anything) {
+  document.querySelector('.slide').src = anything;
+}
+
+function change(change) {
+  const line = document.querySelector('.home');
+  line.style.background = change;
+}
+
+
+// espace commentaires
+
+// Ajoute un gestionnaire d'événements à tous les boutons "Répondre"
+// var replyButtons = document.querySelectorAll('.reply-button');
+// for (var i = 0; i < replyButtons.length; i++) {
+//   replyButtons[i].addEventListener('click', toggleReplyForm);
+// }
+
+// // Fonction pour basculer la visibilité du formulaire de réponse
+// function toggleReplyForm(event) {
+//   event.preventDefault();
+//   var replyForm = this.parentNode.parentNode.querySelector('.reply-form');
+//   if (replyForm) {
+//     replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+//   }
+// }
