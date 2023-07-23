@@ -34,11 +34,9 @@
           <p>Deposer une vente sur la plateforme</p>
           <a class="btn btn-primary" href="{% url 'ventes:create' %}" role="button">Create Sale</a>
         </div>
-        {% endif %}
-        {% if object.ventes.all %}
         <div class="card">
           <p>Voir toutes mes ventes</p>
-          <a class="btn btn-primary" href="{% url 'ventes:list' %}" role="button">Voir mes ventes</a>
+          <a class="btn btn-primary" href="{% url 'ventes:vendeur_profil' vendeur_id=object.id %}" role="button">Voir mes ventes</a>
         </div>
         {% endif %}
       </div>

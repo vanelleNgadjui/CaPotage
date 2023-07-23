@@ -11,6 +11,7 @@ urlpatterns = [
     path("categorie/<int:categorie_id>/", views.ventes_list_categorie, name="ventes_list_categorie"),
     path("ventes-en-cours/", views.ventes_list_en_cours, name="ventes_list_en_cours"),
 
+    path('vendeur/<int:vendeur_id>/', views.vendeur_profil, name='vendeur_profil'),
 
     path('<int:vente_id>/', views.vente_detail, name='vente_detail'),
 

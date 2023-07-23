@@ -22,7 +22,7 @@
           <div>
 
             <h3>
-              <a href="{% url 'ventes:vente_detail' vente.id %}" class="card-title"> Vendeur: {{ vente.vendeur.username }}</a>
+              <a href="{% url 'ventes:vendeur_profil' vendeur_id=vente.vendeur.id %}" class="card-title"> Vendeur: {{ vente.vendeur.username }}</a>
             </h3>
             <p>Periode de vente: </p>
             <p>{{ vente.date_debut }} - {{ vente.date_fin }}</p>

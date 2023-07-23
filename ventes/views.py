@@ -7,20 +7,23 @@ from django.contrib.auth import get_user_model, login
 from django.urls import reverse
 from django.utils.text import slugify
 from django.utils import timezone
+from django.contrib import messages
 
 User = get_user_model()
 
+
 def home(request):
     categories = Categorie.objects.all()
-    ventes_en_cours = Vente.objects.filter(date_fin__gt=timezone.now())[:5]  # Modifier le nombre de ventes à afficher selon vos besoins
-    produits_recherches = Vente.objects.all()[:5]  # Modifier le nombre de produits à afficher selon vos besoins
+    # Modifier le nombre de ventes à afficher selon vos besoins
+    ventes_en_cours = Vente.objects.filter(date_fin__gt=timezone.now())[:5]
+    # Modifier le nombre de produits à afficher selon vos besoins
+    produits_recherches = Vente.objects.all()[:5]
 
     return render(request, 'pages/home.html', {
         'categories': categories,
         'ventes_en_cours': ventes_en_cours,
         'produits_recherches': produits_recherches
     })
-
 
 
 # views.py
@@ -37,6 +40,7 @@ def ventes_list(request):
         'ventes': ventes,
     })
 
+
 def ventes_list_categorie(request, categorie_id):
     categories = Categorie.objects.all()
     categorie = get_object_or_404(Categorie, id=categorie_id)
@@ -50,6 +54,7 @@ def ventes_list_categorie(request, categorie_id):
         'categories': categories,
         'ventes': ventes,
     })
+
 
 def ventes_list_en_cours(request):
     categories = Categorie.objects.all()
@@ -65,8 +70,20 @@ def ventes_list_en_cours(request):
     })
 
 
+def vendeur_profil(request, vendeur_id):
+    vendeur = get_object_or_404(User, id=vendeur_id)
 
-@login_required
+    # Récupérer toutes les ventes du vendeur
+    ventes_vendeur = Vente.objects.filter(vendeur=vendeur)
+
+    return render(request, 'ventes/vendeur_profil.html', {
+        'vendeur': vendeur,
+        'ventes_vendeur': ventes_vendeur,
+    })
+
+# @login_required
+
+
 def vente_detail(request, vente_id):
     vente = get_object_or_404(Vente, pk=vente_id)
     comments = Comment.objects.filter(vente=vente, parent_comment=None)
@@ -79,7 +96,8 @@ def vente_detail(request, vente_id):
             slug = slugify(vente.produit)
 
             # Créez la salle de chat entre le vendeur et l'acheteur s'ils ne sont pas déjà participants
-            room, created = Room.objects.get_or_create(name=vente.produit, slug=slug)
+            room, created = Room.objects.get_or_create(
+                name=vente.produit, slug=slug)
             room.participants.add(request.user, vente.vendeur)
 
             # Redirigez l'utilisateur vers la salle de chat
@@ -96,12 +114,13 @@ def vente_detail(request, vente_id):
                     comment.parent_comment = parent_comment
                 comment.save()
                 return redirect('ventes:vente_detail', vente_id=vente_id)
-                
+
     return render(request, 'ventes/vente_detail.html', {
         'vente': vente,
         'comments': comments,
         'comment_form': comment_form
     })
+
 
 @login_required
 def submit_comment(request, vente_id):
@@ -122,7 +141,6 @@ def submit_comment(request, vente_id):
         'vente': vente,
         'comment_form': comment_form
     })
-
 
 
 @login_required
@@ -175,6 +193,7 @@ def vente_create(request):
         form = VenteForm()
     return render(request, 'ventes/vente_create.html', {'form': form})
 
+
 @login_required
 def vente_update(request, vente_id):
     vente = get_object_or_404(Vente, pk=vente_id)
@@ -189,6 +208,7 @@ def vente_update(request, vente_id):
         form = VenteForm(instance=vente)
     return render(request, 'ventes/vente_update.html', {'form': form, 'vente': vente})
 
+
 @login_required
 def vente_delete(request, vente_id):
     vente = get_object_or_404(Vente, pk=vente_id)
@@ -202,6 +222,7 @@ def vente_delete(request, vente_id):
 def mes_ventes(request):
     ventes = Vente.objects.filter(vendeur=request.user)
     return render(request, 'ventes/mes_ventes.html', {'ventes': ventes})
+
 
 @login_required
 def demande_achat(request, vente_id):
@@ -219,8 +240,9 @@ def demande_achat(request, vente_id):
             return redirect('ventes:list')
     else:
         form = DemandeAchatForm()
-    
+
     return render(request, 'ventes/demande_achat.html', {'form': form, 'vente': vente})
+
 
 @login_required
 def traiter_demande(request, demande_id):
@@ -238,8 +260,9 @@ def traiter_demande(request, demande_id):
         demande.traitee = True
         demande.save()
         # Envoyer une notification ou un message à l'acheteur pour l'informer de la décision
-        
+
     return redirect('ventes:mes_demandes')
+
 
 @login_required
 def mes_demandes(request):

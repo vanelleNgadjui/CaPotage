@@ -11,32 +11,21 @@
       <div class="main_image">
         <img src="{{ vente.photos.url }}" alt="Photo" class="slide">
       </div>
-      <div class="option">
+      <!-- <div class="option">
         <img src="{{ vente.photos.url }}" onclick="img('{{ vente.photos.url }}')">
         <img src="{{ vente.photos.url }}" onclick="img('{{ vente.photos.url }}')">
         <img src="{{ vente.photos.url }}" onclick="img('{{ vente.photos.url }}')">
         <img src="{{ vente.photos.url }}" onclick="img('{{ vente.photos.url }}')">
 
-      </div>
+      </div> -->
     </div>
     <div class="right">
       <h3>{{ vente.produit }}</h3>
       <h4> {{ vente.tarif }}<small>€</small></h4>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-        magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-        consequat. </p>
+      <p>{{ vente.description }} </p>
       <div class="profil flex1">
         <h5>Vendeur : <strong>{{ vente.vendeur.username }}</strong></h5>
-        <a>profil &#8599;</a>
-      </div>
-      <div class="color flex1">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+        <a href="{% url 'ventes:vendeur_profil' vendeur_id=vente.vendeur.id %}">profil &#8599;</a>
       </div>
       <h5>Periode de vente: </h5>
       <div class="add flex1">
@@ -44,11 +33,11 @@
         <span>-</span>
         <label>{{ vente.date_fin }} </label>
       </div>
-
-      <!-- {% if user != vente.vendeur %}
+      {% if user.is_authenticated %}
+      {% if user != vente.vendeur %}
       {% with "ACHETEUR" as role_acheteur %}
       {% with "ACHETEUR_VENDEUR" as role_acheteur_vendeur %}
-      {% if user.role == role_acheteur or user.role == role_acheteur_vendeur %} -->
+      {% if user.role == role_acheteur or user.role == role_acheteur_vendeur %}
       <div class="vente-action">
         <button class="demande"><a href="{% url 'ventes:demande_achat' vente_id=vente.id %}">Demande
             d'achat</a></button>
@@ -57,83 +46,98 @@
           <button type="submit" class="contact" name="chat_with_seller">Discuter avec le vendeur</button>
         </form>
       </div>
-      <!-- {% endif %}
+      {% endif %}
       {% endwith %}
       {% endwith %}
-      {% endif %} -->
+      {% endif %}
+      {% else %}
+      <div class="vente-action">
+        <button class="demande"><a href="{% url 'account_login' %}">Demande d'achat</a></button>
+        <button class="contact"><a href="{% url 'account_login' %}">Discuter avec le vendeur</a></button>
+      </div>
+      {% endif %}
+
     </div>
   </div>
-  {% if user.is_authenticated %}
-  {% endif %}
 
 
 
-  <!-- Formulaire pour ajouter un commentaire -->
-  <div class="commentaires">
 
-    <div class="comment-form-container">
-      <h2>Ajouter un commentaire</h2>
-      <form method="post" action="{% url 'ventes:submit_comment' vente_id=vente.id %}" class="login role">
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="{{ comment_form.content.id_for_label }}">Commentaire :</label>
-          {{ comment_form.content }}
-        </div>
-        <button type="submit" class="btn btn-primary">Soumettre</button>
-      </form>
-    </div>
 
-    <h2>Commentaires</h2>
-    <div class="comment-list">
-      {% for comment in comments %}
-      <div class="comment">
-        <div class="comment-content">
-          <p>{{ comment.content }}</p>
-          <p>Par : {{ comment.user.username }}</p>
-          <p>Date : {{ comment.created_at }}</p>
-          <a href="#" class="reply-button">Répondre</a>
-        </div>
-        <div class="comment-replies">
-          {% for reply in comment.comment_set.all %}
-          <div class="reply">
-            <div class="reply-content">
-              <p>{{ reply.content }}</p>
-              <p>Par : {{ reply.user.username }}</p>
-              <p>Date : {{ reply.created_at }}</p>
-              <a href="#" class="reply-button">Répondre</a>
-            </div>
-            <div class="reply-form">
-              <form method="post" action="{% url 'ventes:submit_comment' vente_id=vente.id %}">
-                {% csrf_token %}
-                {{ comment_form.as_p }}
-                <input type="hidden" name="parent_comment" value="{{ reply.id }}">
-                <button type="submit" class="btn btn-primary">Soumettre</button>
-              </form>
-            </div>
-          </div>
-          {% endfor %}
-        </div>
+  <!-- vente_detail.html -->
+
+<!-- Formulaire pour ajouter un commentaire -->
+<div class="commentaires">
+
+  <div class="comment-form-container">
+    <h2>Ajouter un commentaire</h2>
+    <form method="post" action="{% url 'ventes:submit_comment' vente_id=vente.id %}" class="login role">
+      {% csrf_token %}
+      {% for field in comment_form %}
+      <div class="form-group">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% if field.errors %}
+          <ul class="errorlist">
+            {% for error in field.errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
       </div>
       {% endfor %}
-    </div>
+      <button type="submit" class="btn btn-primary">Soumettre</button>
+    </form>
   </div>
-  <script>
-    // Gestion de l'affichage du formulaire de réponse
-    var replyButtons = document.getElementsByClassName('reply-button');
-    for (var i = 0; i < replyButtons.length; i++) {
-      replyButtons[i].addEventListener('click', function (e) {
-        e.preventDefault();
-        var replyForm = this.parentNode.nextElementSibling.querySelector('.reply-form');
-        if (replyForm) {
-          if (replyForm.style.display === 'none' || replyForm.style.display === '') {
-            replyForm.style.display = 'block';
-          } else {
-            replyForm.style.display = 'none';
-          }
-        }
-      });
-    }
-  </script>
+
+  <h2>Commentaires</h2>
+  <div class="comment-list">
+    {% for comment in comments %}
+    <div class="comment">
+      <div class="comment-content">
+        <p>{{ comment.content }}</p>
+        <p>Par : {{ comment.user.username }}</p>
+      </div>
+      <!-- <div class="comment-replies"> 
+        {% for reply in comment.comment_set.all %}
+        <div class="reply">
+          <div class="reply-content">
+            <p>{{ reply.content }}</p>
+            <p>Par : {{ reply.user.username }}</p>
+          </div>
+        </div>
+        {% endfor %}
+        <div class="reply-form">
+          <form method="post" action="{% url 'ventes:submit_comment' vente_id=vente.id %}">
+            {% csrf_token %}
+            {% for field in comment_form %}
+            <div class="form-group">
+              {{ field }}
+              {% if field.errors %}
+                <ul class="errorlist">
+                  {% for error in field.errors %}
+                    <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <input type="hidden" name="parent_comment" value="{{ comment.id }}">
+            <button type="submit" class="btn btn-primary">Soumettre</button>
+          </form>
+        </div>
+      </div> -->
+    </div>
+    {% endfor %}
+  </div>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+</div>
 
 </section>
 

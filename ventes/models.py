@@ -4,6 +4,8 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.utils.text import slugify
 import os
+from PIL import Image
+
 
 User = get_user_model()
 
@@ -16,7 +18,6 @@ def upload_to(instance, filename):
 
 class Categorie(models.Model):
     nom = models.CharField(max_length=100)
-    image = models.ImageField(upload_to=upload_to, default="")
 
     def __str__(self):
         return self.nom
@@ -35,9 +36,19 @@ class Vente(models.Model):
   
 
     def delete(self, *args, **kwargs):
-        # Supprimer les fichiers de photos lors de la suppression de la vente
         self.photos.delete()
         super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.photos:
+            img = Image.open(self.photos.path)
+
+            # Définir la taille souhaitée pour votre image
+            max_size = (800, 600)
+            img.thumbnail(max_size)
+            img.save(self.photos.path)
 
 
 class Comment(models.Model):
@@ -45,8 +56,7 @@ class Comment(models.Model):
     vente = models.ForeignKey(Vente, on_delete=models.CASCADE)
     parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
     content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
+    created_at = models.DateTimeField(default=timezone.now)
 
 
 class DemandeAchat(models.Model):

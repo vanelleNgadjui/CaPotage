@@ -11,7 +11,7 @@
 </div>
 
 <div class="col-md-6 offset-md-3">
-  <form method="post" enctype="multipart/form-data" class="login">
+  <form method="post" enctype="multipart/form-data" class="login create">
     {% csrf_token %}
     {{ form.as_div }}
     <button class="btn btn-primary" type="submit">Créer</button>

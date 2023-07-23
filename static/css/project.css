@@ -170,7 +170,7 @@ html {
   font-family: var(--ff-urbanist);
   font-size: 10px;
   scroll-behavior: smooth;
-  overflow-x:hidden; 
+  overflow-x: hidden;
 }
 
 body {
@@ -443,7 +443,8 @@ body {
   text-align: center;
   padding-block: 15px;
 }
-.alert-text{
+
+.alert-text {
   color: white;
 }
 
@@ -610,7 +611,7 @@ body {
   pointer-events: all;
 }
 
-.mobile-navbar button{
+.mobile-navbar button {
   margin: 2rem;
 }
 
@@ -658,14 +659,18 @@ body {
   padding-block-start: 0;
 }
 
+.collection a {
+  text-decoration: none;
+}
+
 .collection-list {
   /* display: grid; */
   gap: 15px;
 }
 
 .collection-card {
-  background-color: var(--light-gray);
-  min-height: 400px;
+  background-color: var(--pale-spring-bud);
+  /* min-height: 400px; */
   padding: 40px;
   padding-block-end: 30px;
   display: flex;
@@ -685,6 +690,7 @@ body {
 
 .collection .scrollbar-item {
   min-width: 100%;
+  height: 15rem;
 }
 
 
@@ -1193,7 +1199,7 @@ body {
     padding-block: 8px;
     /* margin-bottom: 2rem; */
   }
-  
+
   .header-top .container {
     padding-inline: 30px;
   }
@@ -1288,7 +1294,7 @@ body {
    */
 
   .collection-card {
-    min-height: 450px;
+    /* min-height: 450px; */
   }
 
   .collection .scrollbar-item {
@@ -1470,8 +1476,9 @@ body {
     display: flex;
     gap: 0.3rem;
   }
+
   .title {
-    margin:5rem 0 5rem 0 !important;
+    margin: 5rem 0 5rem 0 !important;
   }
 
   /**
@@ -1559,7 +1566,7 @@ body {
   /* .header .logo {
     margin-inline-end: 60px;
   } */
- 
+
 
   .header-actions {
     display: flex;
@@ -1707,7 +1714,7 @@ body {
   */
   .action-manager,
   .action-user {
-    grid-template-columns: repeat(3, 1fr)!important;
+    grid-template-columns: repeat(3, 1fr) !important;
     margin-top: 20px;
   }
 }
@@ -1718,7 +1725,7 @@ body {
 .container_detail {
   max-width: 100%;
   margin: auto;
-  height: 100vh;
+  /* height: 100vh; */
   margin-top: 5%;
   background: white;
   box-shadow: 5px 5px 10px 3px rgba(0, 0, 0, 0.3);
@@ -1777,9 +1784,10 @@ body {
 }
 
 .container_detail h3 {
-  color: #af827d;
+  color: #00BF63;
   margin: 20px 0 20px 0;
   font-size: 25px;
+  text-transform: capitalize;
 }
 
 .container_detail h5,
@@ -1789,7 +1797,7 @@ small {
 }
 
 .container_detail h4 {
-  color: red;
+  color: var(--black_50);
 }
 
 .container_detail p {
@@ -1811,40 +1819,21 @@ small {
   margin: 20px 10px 20px 0;
 }
 
-.color span:nth-child(2) {
-  background: #EDEDED;
-}
-
-.color span:nth-child(3) {
-  background: #D5D6D8;
-}
-
-.color span:nth-child(4) {
-  background: #EFE0DE;
-}
-
-.color span:nth-child(5) {
-  background: #AB8ED1;
-}
-
-.color span:nth-child(6) {
-  background: #F04D44;
-}
-
 .add label,
 .add span {
   background: none;
-  border: 1px solid #C1908B;
-  color: #C1908B;
+  border: 1px solid #00BF63;
+  color: #00BF63;
   text-align: center;
   line-height: 25px;
 }
 
 .add label {
-  width: auto;
-  padding: 1.5rem 2rem;
-  border-radius: 50px;
-  line-height: 0;
+    width: auto;
+    border-radius: 50px;
+    /* line-height: 0; */
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .container_detail button {
@@ -1854,7 +1843,7 @@ small {
 }
 
 .demande {
-  background: #C1908B;
+  background: #00BF63;
   color: white;
 }
 
@@ -1928,6 +1917,10 @@ small {
 /* Espaces commentaires */
 .comment-form-container {
   margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .comment-form-container h2 {
@@ -1940,31 +1933,39 @@ small {
   gap: 1rem;
   max-width: 500px;
   margin-bottom: 1rem;
+  width: 100%;
 }
 
 .comment-form-container .form-group {
   display: flex;
   flex-direction: column;
   gap: 3rem;
+  width: 100%;
 }
 
 .comment-form-container .form-group label {
   font-weight: bold;
 }
-
+.comment-form-container .form-group input {
+  height: 12rem;
+}
 .comment-form-container .form-group textarea {
   resize: vertical;
   min-height: 100px;
-  padding: 0.5rem;
+  padding: 1.5rem;
 }
 
 .comment-form-container .btn-primary {
-  align-self: flex-start;
+  /* align-self: flex-start; */
 }
 
+.commentaires h2 {
+  margin-top: 6rem;
+}
 
 .comment-list {
   margin-top: 2rem;
+  width: 100%;
 }
 
 .comment {
@@ -2400,13 +2401,13 @@ select {
 
 .action-manager,
 .action-user {
-  align-items: center; 
+  align-items: center;
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 20px;
 }
 
-.action-manager  .card,
+.action-manager .card,
 .action-user .card {
   background-color: #f5f5f5;
   border-radius: 5px;
@@ -2414,10 +2415,14 @@ select {
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   width: 100%;
 }
 
 .card p {
   margin-bottom: 10px;
+}
+
+.login div {
+  margin-bottom: 1rem;
 }

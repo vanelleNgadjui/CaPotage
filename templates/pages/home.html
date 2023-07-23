@@ -108,12 +108,6 @@
             <a href="{% url 'ventes:ventes_list_categorie' categorie.id %}" class="category-link">
               <div class="collection-card has-before hover:shine">
                 <h2 class="h2 card-title">{{ categorie.nom }}</h2>
-                <p class="card-text">Starting at $17.99</p>
-                <a href="{% url 'ventes:ventes_list_categorie' categorie.id %}" class="btn-link">
-                  <span class="span">Achetez</span>
-                  <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-                </a>
-                <div class="has-bg-image" style="background-image: url('{{ categorie.photo.url }}')"></div>
               </div>
             </a>
           </li>
@@ -271,56 +265,6 @@
 
       </div>
     </section>
-
-
-
-
-
-    <!-- 
-        - #BANNER
-      -->
-
-    <section class="section banner" aria-label="banner" data-section>
-      <div class="container">
-
-        <ul class="banner-list">
-
-          <li>
-            <div class="banner-card banner-card-1 has-before hover:shine">
-
-              <p class="card-subtitle">New Collection</p>
-
-              <h2 class="h2 card-title">Discover Our Autumn Skincare</h2>
-
-              <a href="#" class="btn btn-secondary">Explore More</a>
-
-              <div class="has-bg-image" style="background-image: url('{% static 'images/banner-1.jpg' %}')"></div>
-
-            </div>
-          </li>
-
-          <li>
-            <div class="banner-card banner-card-2 has-before hover:shine">
-
-              <h2 class="h2 card-title">25% off Everything</h2>
-
-              <p class="card-text">
-                Makeup with extended range in colors for every human.
-              </p>
-
-              <a href="#" class="btn btn-secondary">Shop Sale</a>
-
-              <div class="has-bg-image" style="background-image: url('{% static 'images/banner-2.jpg' %}')"></div>
-
-            </div>
-          </li>
-
-        </ul>
-
-      </div>
-    </section>
-
-
 
 
 

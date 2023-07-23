@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Créer une Vente{% endblock %}
+
+{% block content %}
+
+<div class="title">
+    <h2>Profil du Vendeur: {{ vendeur.username }}</h2>
+</div>
+
+<div class="all-actions">
+    <div class="manager">
+        <div class="action-manager">
+            {% for vente in ventes_vendeur %}
+
+            <div class="card">
+                <img src="{{ vente.photos.url }}" alt="{{ vente.produit }}" style="width: 120px; height: 120px;">
+                <h3>{{ vente.produit }} - {{ vente.tarif }} €</h3>
+                <p>{{ vente.description }}</p>
+                <a class="btn btn-primary" href="{% url 'ventes:vente_detail' vente.id %}" role="button">Voir</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
