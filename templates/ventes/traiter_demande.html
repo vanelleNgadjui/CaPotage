@@ -4,6 +4,10 @@
 {% block title %}Traitement de la Demande d'Achat{% endblock %}
 
 {% block content %}
+<a href="{% url 'users:detail' user.username  %}" class="btn-link">
+  <img width="16" height="16" src="https://img.icons8.com/small/16/left2.png" alt="left2"/>
+  <span class="span">Retour</span>
+</a>
   <h1>Traitement de la Demande d'Achat</h1>
 
   <h2>{{ demande.vente.produit }}</h2>

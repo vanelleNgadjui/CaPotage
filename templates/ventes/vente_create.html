@@ -4,7 +4,10 @@
 {% block title %}Créer une Vente{% endblock %}
 
 {% block content %}
-
+<a href="{% url 'users:detail' user.username  %}" class="btn-link">
+  <img width="16" height="16" src="https://img.icons8.com/small/16/left2.png" alt="left2"/>
+  <span class="span">Retour</span>
+</a>
 <div class="title">
   <h1>Création de vente</h1>
   <p>Ici vous pouvez deposer toutes les informations pour enregistrer votre vente sur la plateforme.</p>

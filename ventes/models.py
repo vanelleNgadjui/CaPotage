@@ -42,14 +42,6 @@ class Vente(models.Model):
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 
-        if self.photos:
-            img = Image.open(self.photos.path)
-
-            # Définir la taille souhaitée pour votre image
-            max_size = (800, 600)
-            img.thumbnail(max_size)
-            img.save(self.photos.path)
-
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)

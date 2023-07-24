@@ -4,6 +4,10 @@
 {% block title %}Mes Demandes{% endblock %}
 
 {% block content %}
+<a href="{% url 'users:detail' user.username  %}" class="btn-link">
+  <img width="16" height="16" src="https://img.icons8.com/small/16/left2.png" alt="left2"/>
+  <span class="span">Retour</span>
+</a>
 <h2 class="h2-large section-title">Mes Demandes</h2>
 
 {% if user.is_authenticated %}
