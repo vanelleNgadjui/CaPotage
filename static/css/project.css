@@ -175,7 +175,7 @@ html {
 
 body {
   background-color: var(--white);
-  color: var(--gray-web);
+  color: var(--black_70);
   font-size: 1.6rem;
   font-weight: var(--fw-500);
   line-height: 1.6;
@@ -652,23 +652,26 @@ body {
 
 
 /*-----------------------------------*\
-  #COLLECTION
+  # CATEGORIE 
 \*-----------------------------------*/
 
-.collection {
+.categorie {
   padding-block-start: 0;
 }
-
-.collection a {
+.categorie h2{
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+}
+.categorie a {
   text-decoration: none;
 }
 
-.collection-list {
+.categorie-list {
   /* display: grid; */
   gap: 15px;
 }
 
-.collection-card {
+.categorie-card {
   background-color: var(--pale-spring-bud);
   /* min-height: 400px; */
   padding: 40px;
@@ -677,18 +680,18 @@ body {
   flex-direction: column;
 }
 
-.collection-card .card-title {
+.categorie-card .card-title {
   margin-block-end: 12px;
 }
 
-.collection-card .card-text {
+.categorie-card .card-text {
   color: var(--black);
   font-size: var(--fs-6);
   font-weight: var(--fw-600);
   margin-block-end: auto;
 }
 
-.collection .scrollbar-item {
+.categorie .scrollbar-item {
   min-width: 100%;
   height: 15rem;
 }
@@ -1219,9 +1222,9 @@ body {
   }
 
   /**
-   * COLLECTION
+   * categorie
    */
-  .collection .scrollbar-item {
+  .categorie .scrollbar-item {
     min-width: 65%;
   }
 
@@ -1290,14 +1293,14 @@ body {
 
 
   /**
-   * COLLECTION
+   * categorie
    */
 
-  .collection-card {
+  .categorie-card {
     /* min-height: 450px; */
   }
 
-  .collection .scrollbar-item {
+  .categorie .scrollbar-item {
     min-width: 50%;
   }
 
@@ -1392,16 +1395,16 @@ body {
     max-width: calc(33.33% - 20px);
   }
 
-  .collection .scrollbar-item {
+  .categorie .scrollbar-item {
     min-width: 35%;
   }
 
 
   /**
-   * COLLECTION
+   * categorie
    */
 
-  .collection-list {
+  .categorie-list {
     /* grid-template-columns: repeat(3, 1fr); */
     gap: 30px;
   }
@@ -2308,7 +2311,7 @@ h2 {
 }
 
 label {
-  display: inline-block;
+  display: block;
   /* margin-bottom: 0.5rem; */
   margin-left: 1rem;
 }

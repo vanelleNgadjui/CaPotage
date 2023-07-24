@@ -70,7 +70,7 @@
 <div class="commentaires">
 
   <div class="comment-form-container">
-    <h2>Ajouter un commentaire</h2>
+    <h2 class="h2-large section-title"> Ajouter un commentaire</h2>
     <form method="post" action="{% url 'ventes:submit_comment' vente_id=vente.id %}" class="login role">
       {% csrf_token %}
       {% for field in comment_form %}
@@ -90,7 +90,7 @@
     </form>
   </div>
 
-  <h2>Commentaires</h2>
+  <h2 class="h2-large section-title">Commentaires</h2>
   <div class="comment-list">
     {% for comment in comments %}
     <div class="comment">

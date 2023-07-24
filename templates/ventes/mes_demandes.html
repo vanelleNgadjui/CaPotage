@@ -4,13 +4,14 @@
 {% block title %}Mes Demandes{% endblock %}
 
 {% block content %}
-<h1>Mes Demandes</h1>
+<h2 class="h2-large section-title">Mes Demandes</h2>
 
 {% if user.is_authenticated %}
 {% with "ACHETEUR" as role_acheteur %}
 {% with "VENDEUR" as role_vendeur %}
 {% with "ACHETEUR_VENDEUR" as role_acheteur_vendeur %}
 
+{% if demandes %}
 <table class="table">
   <thead>
     <tr>
@@ -25,8 +26,9 @@
       <th>Date de demande</th>
       <th>Status</th>
     </tr>
-  </thead>
+  </thead> 
   <tbody>
+   
     {% for demande in demandes %}
     <tr>
       {% if user.role == role_vendeur or user.role == role_acheteur_vendeur %}
@@ -80,6 +82,9 @@
     {% endfor %}
   </tbody>
 </table>
+{% else %}
+<p>Vous n'avez aucune demande.</p>
+{% endif %}
 
 {% endwith %}
 {% endwith %}

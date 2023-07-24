@@ -20,19 +20,17 @@
 
   <div class="all-actions">
     <div class="manager">
-      <h3>Actions sur la plateforme</h3>
+      <h2 class="h3-large section-title">Actions sur la plateforme</h2>
       <div class="action-manager">
-
-
         <div class="card">
-          <p>Acceder a toutes vos demandes</p>
+          <p>Acceder a toutes vos demandes d'achat</p>
           <a class="btn btn-primary" href="{% url 'ventes:mes_demandes' %}" role="button">Mes demandes</a>
         </div>
 
         {% if object.role == 'VENDEUR' or object.role == 'ACHETEUR_VENDEUR' %}
         <div class="card">
           <p>Deposer une vente sur la plateforme</p>
-          <a class="btn btn-primary" href="{% url 'ventes:create' %}" role="button">Create Sale</a>
+          <a class="btn btn-primary" href="{% url 'ventes:create' %}" role="button">Créer une vente</a>
         </div>
         <div class="card">
           <p>Voir toutes mes ventes</p>
@@ -43,7 +41,7 @@
     </div>
     <div class="user">
 
-      <h3>Actions sur mon compte</h3>
+      <h2 class="h3-large section-title">Actions sur mon compte</h2>
       <div class="action-user">
         <div class="card">
           <p>Modifier mes informations personnelles</p>

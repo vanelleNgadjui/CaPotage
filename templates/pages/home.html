@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Chat{% endblock %}
+{% block title %}Ca potage{% endblock %}
 
 {% block content %}
 <main>
@@ -97,16 +97,17 @@
 
 
     <!-- 
-        - #COLLECTION
+        - #CATEGORIE 
       -->
 
-    <section class="section collection" id="collection" aria-label="collection" data-section>
+    <section class="section categorie" id="categorie" aria-label="categorie" data-section>
+      <h2 class="h2-large section-title">Catégories</h2>
       <div class="container">
-        <ul class="has-scrollbar collection-list">
+        <ul class="has-scrollbar categorie-list">
           {% for categorie in categories %}
           <li class="scrollbar-item">
             <a href="{% url 'ventes:ventes_list_categorie' categorie.id %}" class="category-link">
-              <div class="collection-card has-before hover:shine">
+              <div class="categorie-card has-before hover:shine">
                 <h2 class="h2 card-title">{{ categorie.nom }}</h2>
               </div>
             </a>
@@ -282,7 +283,7 @@
           <li class="flex-item">
             <div class="feature-card">
 
-              <img src="{% static 'images/' %}" width="204" height="236" loading="lazy"
+              <img src="{% static 'images/quality.png' %}" width="204" height="236" loading="lazy"
                 alt="Qualité garantie" class="card-icon">
 
               <h3 class="h3 card-title">Qualité garantie</h3>
@@ -297,7 +298,7 @@
           <li class="flex-item">
             <div class="feature-card">
 
-              <img src="{% static 'images/' %}" width="204" height="236" loading="lazy"
+              <img src="{% static 'images/animals.png' %}" width="204" height="236" loading="lazy"
                 alt="Respect total des animaux" class="card-icon">
 
               <h3 class="h3 card-title">Respect total des animaux</h3>
@@ -313,7 +314,7 @@
           <li class="flex-item">
             <div class="feature-card">
 
-              <img src="{% static 'images/' %}" width="204" height="236" loading="lazy"
+              <img src="{% static 'images/conveyor.png' %}" width="204" height="236" loading="lazy"
                 alt="Approvisionnement responsabl" class="card-icon">
 
               <h3 class="h3 card-title">Approvisionnement responsable</h3>
