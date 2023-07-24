@@ -8,11 +8,14 @@
   <img width="16" height="16" src="https://img.icons8.com/small/16/left2.png" alt="left2"/>
   <span class="span">Retour</span>
 </a>
-  <h1>Demande d'Achat</h1>
-
-  <form method="post">
+<div class="title">
+<h2 class="h2-large section-title">Demande d'Achat</h2>
+</div>
+  <div class="col-md-6 offset-md-3">
+    <form method="post" enctype="multipart/form-data" class="login">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_div }}
     <button class="btn btn-primary" type="submit">Envoyer</button>
   </form>
+  </div>
 {% endblock %}

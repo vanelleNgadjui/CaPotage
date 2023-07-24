@@ -27,6 +27,7 @@ class CommentForm(forms.ModelForm):
         fields = ['content', 'parent_comment']    
 
 class DemandeAchatForm(forms.ModelForm):
+    message = forms.CharField(widget=forms.Textarea(attrs={'class': 'textinput form-control'}))
     class Meta:
         model = DemandeAchat
         fields = ['message']
