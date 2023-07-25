@@ -31,7 +31,7 @@ class Vente(models.Model):
     tarif = models.DecimalField(max_digits=10, decimal_places=2)
     date_debut = models.DateField(default=timezone.now)
     date_fin = models.DateField(default=timezone.now)
-    photos = models.ImageField()
+    photos = models.ImageField(upload_to='ventes/')
     comments = models.ManyToManyField(User, through='Comment', related_name='vente_comments')
   
 
