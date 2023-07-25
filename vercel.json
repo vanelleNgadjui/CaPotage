@@ -1,26 +1,26 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "core/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3" }
-      },
-      {
-        "src": "build_files.sh",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "storages.backends.s3boto3.S3Boto3Storage/"
-        }
+  "version": 2,
+  "builds": [
+    {
+      "src": "core/wsgi.py",
+      "use": "@vercel/python",
+      "config": { "maxLambdaSize": "15mb", "runtime": "python3" }
+    },
+    {
+      "src": "static/",
+      "use": "@vercel/static",
+      "config": {
+        "basePath": "static"
       }
-    ],
-    "routes": [
-      { "handle": "filesystem" },
-      { "src": "/static/(.*)", "dest": "/static/$1" },
-      { "src": "/media/(.*)", "dest": "/media/$1" },
-      {
-        "src": "/(.*)",
-        "dest": "core/wsgi.py"
-      }
-    ]
-  }
+    }
+  ],
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/static/(.*)", "dest": "/static/$1" },
+    { "src": "/media/(.*)", "dest": "/media/$1" },
+    {
+      "src": "/(.*)",
+      "dest": "core/wsgi.py"
+    }
+  ]
+}
